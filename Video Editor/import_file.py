@@ -10,13 +10,26 @@ import wave
 
 import os
 
+class fileButton(Frame):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+    def initUI(self):
 
+        menubar = Menu(self.master)
+        self.master.config(menu=menubar)
+
+        fileMenu = Menu(menubar)
+        fileMenu.add_command(label='Import', command=openFile)
+        menubar.add_cascade(label='File', menu=fileMenu)
+    def onExit(self):
+        self.quit()
 
 def openFile():
     filepath = filedialog.askopenfilename(initialdir="C:\\Users\\aojed\\Downloads",
                                           title='Import file',
                                           filetypes=(("images", "*.png"),
-                                            ("all files", "*.*"),
+                                            ("videos", "*.mp4"),
                                             ('audio', "*.mp3")))
     if filepath.endswith(".png"):
         try:
@@ -42,17 +55,14 @@ def openFile():
     #print(filepath)
 
 
-window = Tk()
-window.geometry("250x170")
 
-no_image = Label(window, text='No image found')
-no_image.config(font =("Courier", 14))
-button = Button(text="OK", command=window.destroy())
-no_image.pack()
-button.pack()
-tk.mainloop()
-# openFile()
-# window = Tk()
-# button = Button(text="Open", command=openFile)
-# button.pack()
-# window.mainloop()
+#openFile()
+window = Tk()
+
+width = window.winfo_screenwidth()
+height = window.winfo_screenheight()
+
+window.geometry('%dx%d'%(width,height))
+window.title('Video Editor')
+app = fileButton()
+window.mainloop()
