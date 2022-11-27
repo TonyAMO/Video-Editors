@@ -1,15 +1,18 @@
+import tkinter
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 
-from PIL import Image
+from PIL import Image, ImageTk
+import numpy as np
+import cv2
 from playsound import playsound
 
 import time
 import wave
 
 import os
-
+#window = Tk()
 class fileButton(Frame):
     def __init__(self):
         super().__init__()
@@ -20,8 +23,37 @@ class fileButton(Frame):
         self.master.config(menu=menubar)
 
         fileMenu = Menu(menubar)
-        fileMenu.add_command(label='Import', command=openFile)
+        fileMenu.add_command(label='Import', command=self.importFile)
         menubar.add_cascade(label='File', menu=fileMenu)
+
+    def importFile(self):
+        filePath = openFile()
+        if filePath.endswith(".png"):
+            imgFile = ImageTk.PhotoImage(Image.open(filePath))
+            label = tkinter.Label(image=imgFile)
+            label.image = imgFile
+            label.place(x=10,y=100)
+        elif filePath.endswith(".mp4"):
+            vidFile = cv2.VideoCapture(filePath)
+            if (vidFile.isOpened()==False):
+                err_window = Tk()
+                err_window.geometry("250x170")
+                button = Button(text="OK")
+                button.pack()
+                T = Text(err_window, height=5, width=52)
+                T.insert(END, "no video found")
+                err_window.mainloop()
+                print("no image found")
+            while(vidFile.isOpened()):
+                ret, frame = vidFile.read()
+                if ret == True:
+                    cv2.imshow('Frame', frame)
+                    if cv2.waitKey(25) & 0xFF == ord('q'):
+                        break
+                else:
+                    break
+            vidFile.release()
+            cv2.destroyAllWindows()
     def onExit(self):
         self.quit()
 
@@ -33,22 +65,23 @@ def openFile():
                                             ('audio', "*.mp3")))
     if filepath.endswith(".png"):
         try:
-            img = Image.open(filepath)
-            img.show()
+            return filepath
         except IOError:
-            window = Tk()
-            window.geometry("250x170")
+            err_window = Tk()
+            err_window.geometry("250x170")
             button = Button(text="OK")
             button.pack()
-            T = Text(window, height=5, width=52)
+            T = Text(err_window, height=5, width=52)
             T.insert(END, "no image found")
-            window.mainloop()
+            err_window.mainloop()
             print("no image found")
     elif filepath.endswith(".mp3"):
         # head_tail = os.path.split(filepath)
         # filepath_str = str(head_tail[0])+str(head_tail[1])
         # playsound(r'')
         print('Playing audio file')
+    elif filepath.endswith(".mp4"):
+        return filepath
     # file = open(filepath, 'r')
     # print(file.read())
     # file.close()
@@ -57,12 +90,4 @@ def openFile():
 
 
 #openFile()
-window = Tk()
 
-width = window.winfo_screenwidth()
-height = window.winfo_screenheight()
-
-window.geometry('%dx%d'%(width,height))
-window.title('Video Editor')
-app = fileButton()
-window.mainloop()
