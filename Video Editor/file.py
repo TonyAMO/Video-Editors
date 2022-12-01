@@ -1,4 +1,3 @@
-import tkinter
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
@@ -6,6 +5,7 @@ from tkinter import filedialog
 from PIL import Image, ImageTk
 import numpy as np
 import cv2
+import moviepy.editor as mpe
 from playsound import playsound
 
 import time
@@ -18,7 +18,6 @@ class fileButton(Frame):
         super().__init__()
         self.initUI()
     def initUI(self):
-
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 
@@ -30,20 +29,11 @@ class fileButton(Frame):
         filePath = openFile()
         if filePath.endswith(".png"):
             imgFile = ImageTk.PhotoImage(Image.open(filePath))
-            label = tkinter.Label(image=imgFile)
+            label = tk.Label(image=imgFile)
             label.image = imgFile
             label.place(x=10,y=100)
         elif filePath.endswith(".mp4"):
             vidFile = cv2.VideoCapture(filePath)
-            if (vidFile.isOpened()==False):
-                err_window = Tk()
-                err_window.geometry("250x170")
-                button = Button(text="OK")
-                button.pack()
-                T = Text(err_window, height=5, width=52)
-                T.insert(END, "no video found")
-                err_window.mainloop()
-                print("no image found")
             while(vidFile.isOpened()):
                 ret, frame = vidFile.read()
                 if ret == True:
@@ -54,6 +44,11 @@ class fileButton(Frame):
                     break
             vidFile.release()
             cv2.destroyAllWindows()
+        elif filePath.endswith(".mp3"):
+            audioclip = mpe.AudioFileClip(filePath)
+        else:
+            return
+
     def onExit(self):
         self.quit()
 
@@ -81,7 +76,18 @@ def openFile():
         # playsound(r'')
         print('Playing audio file')
     elif filepath.endswith(".mp4"):
-        return filepath
+        try:
+            return filepath
+        except IOError:
+            err_window = Tk()
+            err_window.geometry("250x170")
+            button = Button(text="OK")
+            button.pack()
+            T = Text(err_window, height=5, width=52)
+            T.insert(END, "no video found")
+            err_window.mainloop()
+    else:
+        return None
     # file = open(filepath, 'r')
     # print(file.read())
     # file.close()
