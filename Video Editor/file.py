@@ -25,14 +25,15 @@ class fileButton(Frame):
         fileMenu.add_command(label='Import', command=self.importFile)
         menubar.add_cascade(label='File', menu=fileMenu)
 
+    #File > Import
     def importFile(self):
         filePath = openFile()
-        if filePath.endswith(".png"):
+        if filePath.endswith(".png"): #import image
             imgFile = ImageTk.PhotoImage(Image.open(filePath))
             label = tk.Label(image=imgFile)
             label.image = imgFile
             label.place(x=10,y=100)
-        elif filePath.endswith(".mp4"):
+        elif filePath.endswith(".mp4"): #import video
             vidFile = cv2.VideoCapture(filePath)
             while(vidFile.isOpened()):
                 ret, frame = vidFile.read()
@@ -44,7 +45,7 @@ class fileButton(Frame):
                     break
             vidFile.release()
             cv2.destroyAllWindows()
-        elif filePath.endswith(".mp3"):
+        elif filePath.endswith(".mp3"): #imput audio
             audioclip = mpe.AudioFileClip(filePath)
         else:
             return
@@ -52,6 +53,7 @@ class fileButton(Frame):
     def onExit(self):
         self.quit()
 
+#opens file navigation
 def openFile():
     filepath = filedialog.askopenfilename(initialdir="C:\\Users\\aojed\\Downloads",
                                           title='Import file',
@@ -71,10 +73,17 @@ def openFile():
             err_window.mainloop()
             print("no image found")
     elif filepath.endswith(".mp3"):
-        # head_tail = os.path.split(filepath)
-        # filepath_str = str(head_tail[0])+str(head_tail[1])
-        # playsound(r'')
-        print('Playing audio file')
+        try:
+            return filepath
+        except IOError:
+            err_window = Tk()
+            err_window.geometry("250x170")
+            button = Button(text="OK")
+            button.pack()
+            T = Text(err_window, height=5, width=52)
+            T.insert(END, "no image found")
+            err_window.mainloop()
+            print("no audio found")
     elif filepath.endswith(".mp4"):
         try:
             return filepath

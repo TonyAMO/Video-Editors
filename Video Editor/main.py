@@ -11,12 +11,14 @@ def doNothing():
 
 window = Tk()
 if __name__ == '__main__':
+    #window creation
     width = window.winfo_screenwidth()
     height = window.winfo_screenheight()
 
     window.geometry('%dx%d' % (width, height))
     window.title('Video Editor')
 
+    #menu creation
     menu = Menu(window)
     window.config(menu=menu)
 
