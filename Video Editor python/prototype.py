@@ -3,7 +3,7 @@ import tkinter
 from tkinter import *
 from moviepy.editor import *
 from pygame import *
-from file import openFile
+from file import *
 
 #Functions
 
@@ -92,24 +92,25 @@ def audio_file():
 
 def export():
     global final_clip
-    exp_input = Tk()
-
-    exp_input.title("Export video")
-    exp_input.geometry("600x400")
-    label1 = tkinter.Label(exp_input, text="Enter name of video", font=('calibre', 10, 'bold'))
-    label1.pack()
-    def submit():
-        global name
-        e = entry1.get()
-        name = str(e)+".mp4"
-
-    entry1 = tkinter.Entry(exp_input, width=35)
-    entry1.pack()
-    button = Button(exp_input, text="Submit", command=lambda: [submit(), exp_input.destroy(), exp_input.quit()])
-    button.pack()
-    exp_input.mainloop()
-
-    final_clip.write_videofile(name)
+    exportFile(final_clip)
+    # exp_input = Tk()
+    #
+    # exp_input.title("Export video")
+    # exp_input.geometry("600x400")
+    # label1 = tkinter.Label(exp_input, text="Enter name of video", font=('calibre', 10, 'bold'))
+    # label1.pack()
+    # def submit():
+    #     global name
+    #     e = entry1.get()
+    #     name = str(e)+".mp4"
+    #
+    # entry1 = tkinter.Entry(exp_input, width=35)
+    # entry1.pack()
+    # button = Button(exp_input, text="Submit", command=lambda: [submit(), exp_input.destroy(), exp_input.quit()])
+    # button.pack()
+    # exp_input.mainloop()
+    #
+    # final_clip.write_videofile(name)
 
 #main screen
 
