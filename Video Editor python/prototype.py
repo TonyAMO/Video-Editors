@@ -4,21 +4,26 @@ from moviepy.editor import *
 from pygame import *
 from file import openFile
 
+
+
 #Functions
+
+final_product = input('End File Name:\n ')
 
 def import_clip():
     return VideoFileClip(openFile())
 
 def mix():
-    clip_1 = import_clip()
-    clip_2 = import_clip()
-    clip_3 = import_clip()
-    final_clip=concatenate_videoclips([clip_1,clip_2,clip_3])
-    final_clip.write_videofile("final_render.mp4")
+    clips =[]
+    i = int(input("Enter number of files you are choosing to mix: "))
+    for c in range(0,i):
+        clips.append(import_clip())
+    final_clip=concatenate_videoclips(clips)
+    final_clip.write_videofile(final_product)
 
 def mirror():
     clip_mirror = import_clip().fx(vfx.mirror_x)
-    clip_mirror.write_videofile("final_render.mp4")
+    clip_mirror.write_videofile(final_product)
 
 def resize():
     r=float(input("Enter your resize: "))
@@ -26,30 +31,30 @@ def resize():
     #h=int(input("Enter your height: "))
     clip_resize=import_clip().resize(r).margin(top=1)
     #clip_resize.preview()
-    clip_resize.write_videofile("final_render.mp4")
+    clip_resize.write_videofile(final_product)
 
 def speed_vfx():
-    speed = float(input("Enter your speed: "))
+    speed = float(input("Enter your output speed: "))
     clip_speed = import_clip().fx(vfx.speedx, speed)
-    clip_speed.write_videofile("final_render.mp4")
+    clip_speed.write_videofile(final_product)
 
 def color_vfx():
     color = float(input("Value of darkness: "))
     clip_color = import_clip().fx(vfx.colorx, color)
-    clip_color.write_videofile("final_render.mp4")
+    clip_color.write_videofile(final_product)
 
 def trim():
     starting=int(input("Enter starting point here: "))
     ending = int(input("Enter ending point here: "))
     clip_trim = import_clip().subclip(starting,ending)
-    clip_trim.write_videofile("final_render.mp4")
+    clip_trim.write_videofile(final_product)
 
 def audio_file():
     import moviepy.editor as mpe
     audioclip = mpe.AudioFileClip(import_clip())
     videoclip = mpe.videoclip.set_audio(audioclip)
     final_clip = videoclip.set_audio(audioclip)
-    final_clip.write_videofile("final_render.mp4")
+    final_clip.write_videofile(final_product)
 
 #main screen
 
