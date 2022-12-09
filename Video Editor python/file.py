@@ -106,7 +106,7 @@ def openFile():
 def exportFile(final):
     exp_name = filedialog.asksaveasfilename(initialdir="C:\\Users\\aojed\\Downloads",
                                           title='Export file',
-                                          filetypes=(("images", "*.png"),
-                                                     ("videos", "*.mp4"),
+                                          filetypes=(("videos", "*.mp4"),
+                                                    ("images", "*.png"),
                                                      ('audio', "*.mp3")))
     final.write_videofile(exp_name+".mp4")

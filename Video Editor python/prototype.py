@@ -91,7 +91,6 @@ def speed_vfx():
         final_clip = import_clip().fx(vfx.speedx, sp)
 
 def color_vfx():
-    #color = float(input("Value of darkness: "))
     global final_clip
     col_input = Tk()
 
@@ -99,7 +98,6 @@ def color_vfx():
     col_input.geometry("600x400")
     label1 = tkinter.Label(col_input, text="Enter brightness", font=('calibre', 10, 'bold'))
     label1.pack()
-
     def submit():
         global col
         e = entry1.get()
@@ -115,10 +113,33 @@ def color_vfx():
         final_clip = import_clip().fx(vfx.colorx, col)
 
 def trim():
-    starting=int(input("Enter starting point here: "))
-    ending = int(input("Enter ending point here: "))
-    clip_trim = import_clip().subclip(starting,ending)
-    clip_trim.write_videofile("final_render.mp4")
+    global final_clip
+    trim_input = Tk()
+
+    trim_input.title("Trim video")
+    trim_input.geometry("600x400")
+    label1 = tkinter.Label(trim_input, text="Enter starting point", font=('calibre', 10, 'bold'))
+    label1.pack()
+    entry1 = tkinter.Entry(trim_input, width=35)
+    entry1.pack()
+    label2 = tkinter.Label(trim_input, text="Enter ending point", font=('calibre', 10, 'bold'))
+    label2.pack()
+    entry2 = tkinter.Entry(trim_input, width=35)
+    entry2.pack()
+
+    def submit():
+        global start, end
+        e1 = entry1.get()
+        e2 = entry2.get()
+        start = int(e1)
+        end = int(e2)
+    button = Button(trim_input, text="Submit", command=lambda: [submit(), trim_input.destroy(), trim_input.quit()])
+    button.pack()
+    trim_input.mainloop()
+    # starting=int(input("Enter starting point here: "))
+    # ending = int(input("Enter ending point here: "))
+    if (start != None or end!=None) and final_clip == None:
+        final_clip = import_clip().subclip(start,end)
 
 def audio_file():
     import moviepy.editor as mpe
@@ -130,24 +151,6 @@ def audio_file():
 def export():
     global final_clip
     exportFile(final_clip)
-    # exp_input = Tk()
-    #
-    # exp_input.title("Export video")
-    # exp_input.geometry("600x400")
-    # label1 = tkinter.Label(exp_input, text="Enter name of video", font=('calibre', 10, 'bold'))
-    # label1.pack()
-    # def submit():
-    #     global name
-    #     e = entry1.get()
-    #     name = str(e)+".mp4"
-    #
-    # entry1 = tkinter.Entry(exp_input, width=35)
-    # entry1.pack()
-    # button = Button(exp_input, text="Submit", command=lambda: [submit(), exp_input.destroy(), exp_input.quit()])
-    # button.pack()
-    # exp_input.mainloop()
-    #
-    # final_clip.write_videofile(name)
 
 #main screen
 
