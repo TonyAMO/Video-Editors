@@ -34,9 +34,11 @@ def mix():
     mix_input.mainloop()
     clips = []
     #i = int(input("enter input: "))
-    for c in range(0,i):
-        clips.append(import_clip())
-    final_clip=concatenate_videoclips(clips)
+    if i != None and final_clip == None:
+        for c in range(0,i):
+            clips.append(import_clip())
+
+        final_clip=concatenate_videoclips(clips)
 
 
 def mirror():
@@ -63,7 +65,7 @@ def resize():
     button = Button(rsz_input, text="Submit", command=lambda: [submit(), rsz_input.destroy(), rsz_input.quit()])
     button.pack()
     rsz_input.mainloop()
-    if r!=None:
+    if r!=None and final_clip==None:
         final_clip=import_clip().resize(r).margin(top=1)
 
 def speed_vfx():
@@ -85,12 +87,32 @@ def speed_vfx():
     button = Button(spd_input, text="Submit", command=lambda: [submit(), spd_input.destroy(), spd_input.quit()])
     button.pack()
     spd_input.mainloop()
-    final_clip = import_clip().fx(vfx.speedx, sp)
+    if sp != None and final_clip == None:
+        final_clip = import_clip().fx(vfx.speedx, sp)
 
 def color_vfx():
-    color = float(input("Value of darkness: "))
-    clip_color = import_clip().fx(vfx.colorx, color)
-    clip_color.write_videofile("final_render.mp4")
+    #color = float(input("Value of darkness: "))
+    global final_clip
+    col_input = Tk()
+
+    col_input.title("Brightness")
+    col_input.geometry("600x400")
+    label1 = tkinter.Label(col_input, text="Enter brightness", font=('calibre', 10, 'bold'))
+    label1.pack()
+
+    def submit():
+        global col
+        e = entry1.get()
+        print(e)
+        col = float(e)
+
+    entry1 = tkinter.Entry(col_input, width=35)
+    entry1.pack()
+    button = Button(col_input, text="Submit", command=lambda: [submit(), col_input.destroy(), col_input.quit()])
+    button.pack()
+    col_input.mainloop()
+    if col != None and final_clip == None:
+        final_clip = import_clip().fx(vfx.colorx, col)
 
 def trim():
     starting=int(input("Enter starting point here: "))
@@ -165,7 +187,7 @@ b.config(width=8, height=3)
 
 #color
 
-b=Button(root, text="Color", relief=GROOVE, bg="#232323", fg="white", command=color_vfx)
+b=Button(root, text="Brightness", relief=GROOVE, bg="#232323", fg="white", command=color_vfx)
 b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
