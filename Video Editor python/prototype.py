@@ -1,4 +1,5 @@
 #import
+import tkinter
 from tkinter import *
 from moviepy.editor import *
 from pygame import *
@@ -6,14 +7,34 @@ from file import openFile
 
 #Functions
 
+
+
+
 def import_clip():
     return VideoFileClip(openFile())
 
 def mix():
-    clip_1 = import_clip()
-    clip_2 = import_clip()
-    clip_3 = import_clip()
-    final_clip=concatenate_videoclips([clip_1,clip_2,clip_3])
+    mix_input = Tk()
+    mix_input.title("Mix videos")
+    mix_input.geometry("600x400")
+    label1 = tkinter.Label(mix_input, text="Enter amount of videos to mix", font=('calibre',10, 'bold'))
+    label1.pack()
+    entry1 = tkinter.Entry(mix_input, width=35)
+    entry1.pack()
+    def submit():
+        i = entry1.get()
+    button = Button(mix_input, text="Submit", command=lambda: [submit(), mix_input.destroy()])
+    button.pack()
+
+    mix_input.mainloop()
+    # clip_1 = import_clip()
+    # clip_2 = import_clip()
+    # clip_3 = import_clip()
+    clips = []
+    #i = int(input("enter input: "))
+    for c in range(0,i):
+        clips.append(import_clip())
+    final_clip=concatenate_videoclips(clips)
     final_clip.write_videofile("final_render.mp4")
 
 def mirror():
