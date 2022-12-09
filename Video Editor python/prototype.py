@@ -32,10 +32,6 @@ def mix():
     button = Button(mix_input, text="Submit", command=lambda: [submit(), mix_input.destroy(), mix_input.quit()])
     button.pack()
     mix_input.mainloop()
-    print(i)
-    # clip_1 = import_clip()
-    # clip_2 = import_clip()
-    # clip_3 = import_clip()
     clips = []
     #i = int(input("enter input: "))
     for c in range(0,i):
@@ -45,7 +41,7 @@ def mix():
 
 def mirror():
     clip_mirror = import_clip().fx(vfx.mirror_x)
-    clip_mirror.write_videofile("final_render.mp4")
+    clip_mirror.write_videofile("baby.mp4")
 
 def resize():
     r=float(input("Enter your resize: "))
@@ -63,7 +59,6 @@ def speed_vfx():
     spd_input.geometry("600x400")
     label1 = tkinter.Label(spd_input, text="Enter speed", font=('calibre', 10, 'bold'))
     label1.pack()
-    sp = 1
     def submit():
         global sp
         e = entry1.get()
@@ -103,19 +98,18 @@ def export():
     exp_input.geometry("600x400")
     label1 = tkinter.Label(exp_input, text="Enter name of video", font=('calibre', 10, 'bold'))
     label1.pack()
-    s = ""
     def submit():
-        global s
+        global name
         e = entry1.get()
-        s = str(e)+".mp4"
-
+        name = str(e)+".mp4"
 
     entry1 = tkinter.Entry(exp_input, width=35)
     entry1.pack()
     button = Button(exp_input, text="Submit", command=lambda: [submit(), exp_input.destroy(), exp_input.quit()])
     button.pack()
     exp_input.mainloop()
-    final_clip.write_videofile(s)
+
+    final_clip.write_videofile(name)
 
 #main screen
 
