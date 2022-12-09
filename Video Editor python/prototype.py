@@ -141,12 +141,12 @@ def trim():
     if (start != None or end!=None) and final_clip == None:
         final_clip = import_clip().subclip(start,end)
 
-def audio_file():
-    import moviepy.editor as mpe
-    audioclip = mpe.AudioFileClip(import_clip())
-    videoclip = mpe.videoclip.set_audio(audioclip)
-    final_clip = videoclip.set_audio(audioclip)
-    final_clip.write_videofile("final_render.mp4")
+# def audio_file():
+#     import moviepy.editor as mpe
+#     audioclip = mpe.AudioFileClip(import_clip())
+#     videoclip = mpe.videoclip.set_audio(audioclip)
+#     final_clip = videoclip.set_audio(audioclip)
+#     final_clip.write_videofile("final_render.mp4")
 
 def export():
     global final_clip
@@ -202,9 +202,9 @@ b.config(width=8, height=3)
 
 #audio
 
-b=Button(root, text="Audio", relief=GROOVE, bg="#232323", fg="white", command=audio_file)
-b.pack(side="left", padx=20)
-b.config(width=8, height=3)
+# b=Button(root, text="Audio", relief=GROOVE, bg="#232323", fg="white", command=audio_file)
+# b.pack(side="left", padx=20)
+# b.config(width=8, height=3)
 
 #export
 
