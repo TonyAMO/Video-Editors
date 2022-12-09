@@ -44,12 +44,27 @@ def mirror():
     clip_mirror.write_videofile("baby.mp4")
 
 def resize():
-    r=float(input("Enter your resize: "))
-    #w=int(input("Enter your width: "))
-    #h=int(input("Enter your height: "))
-    clip_resize=import_clip().resize(r).margin(top=1)
-    #clip_resize.preview()
-    clip_resize.write_videofile("final_render.mp4")
+    global final_clip
+    rsz_input = Tk()
+
+    rsz_input.title("Mix videos")
+    rsz_input.geometry("600x400")
+    label1 = tkinter.Label(rsz_input, text="Enter resize amount", font=('calibre', 10, 'bold'))
+    label1.pack()
+
+    def submit():
+        global r
+        e = entry1.get()
+        print(e)
+        r = float(e)
+
+    entry1 = tkinter.Entry(rsz_input, width=35)
+    entry1.pack()
+    button = Button(rsz_input, text="Submit", command=lambda: [submit(), rsz_input.destroy(), rsz_input.quit()])
+    button.pack()
+    rsz_input.mainloop()
+    if r!=None:
+        final_clip=import_clip().resize(r).margin(top=1)
 
 def speed_vfx():
     global final_clip
