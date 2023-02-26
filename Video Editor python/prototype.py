@@ -42,8 +42,9 @@ def mix():
 
 
 def mirror():
-    clip_mirror = import_clip().fx(vfx.mirror_x)
-    clip_mirror.write_videofile("baby.mp4")
+    clip_mirror = import_clip().fx(vfx.mirror_y)
+    name = clip_mirror.filename
+    clip_mirror.write_videofile(name, fps=30)
 
 def resize():
     global final_clip
