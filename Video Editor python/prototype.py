@@ -43,8 +43,10 @@ def mix():
 
 def mirror():
     clip_mirror = import_clip().fx(vfx.mirror_y)
-    name = clip_mirror.filename
-    clip_mirror.write_videofile(name, fps=30)
+    print("please type the file name")
+    user_input = input("")
+    clip_name = user_input + ".mp4"
+    clip_mirror.write_videofile(clip_name, codec="libx264")
 
 def resize():
     global final_clip
