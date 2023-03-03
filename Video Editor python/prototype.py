@@ -72,26 +72,13 @@ def resize():
         final_clip=import_clip().resize(r).margin(top=1)
 
 def speed_vfx():
-    global final_clip
-    spd_input = Tk()
-
-    spd_input.title("Speed up/down video")
-    spd_input.geometry("600x400")
-    label1 = tkinter.Label(spd_input, text="Enter speed", font=('calibre', 10, 'bold'))
-    label1.pack()
-    def submit():
-        global sp
-        e = entry1.get()
-        print(e)
-        sp = float(e)
-
-    entry1 = tkinter.Entry(spd_input, width=35)
-    entry1.pack()
-    button = Button(spd_input, text="Submit", command=lambda: [submit(), spd_input.destroy(), spd_input.quit()])
-    button.pack()
-    spd_input.mainloop()
-    if sp != None and final_clip == None:
-        final_clip = import_clip().fx(vfx.speedx, sp)
+    print("Please enter the speed in which you wish to apply to the video (0.5 for half-speed, 2.0 for twice as fast): ")
+    speed_input = float(input(""))
+    clip_speed = import_clip().fx(vfx.speedx, speed_input)
+    print("Please type the file name:")
+    user_input = input("")
+    clip_name = user_input + ".mp4"
+    clip_speed.write_videofile(clip_name, codec="libx264")
 
 def color_vfx():
     global final_clip
