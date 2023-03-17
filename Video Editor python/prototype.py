@@ -64,65 +64,30 @@ def speed_vfx():
     print("Please type the file name:")
     user_input = input("")
     clip_name = user_input + ".mp4"
-    clip_speed.write_videofile(clip_name, codec="libx264")
+    clip_speed.write_videofile(clip_name, codec="libx264", audio_codec="aac")
 
-def color_vfx():
-    global final_clip
-    col_input = Tk()
+def brightness_vfx():
+    clip = import_clip()
+    print("Please specify if you wish to darken or brighten your clip (Less than 1.0 to darken, Greater than 1.0 to brighten): ")
+    brightness = float(input(""))
+    clip_brightness = clip.fx( vfx.colorx, brightness)
+    print("Please type the file name:")
+    user_input = input("")
+    clip_name = user_input + ".mp4"
+    clip_brightness.write_videofile(clip_name, codec="libx264", audio_codec="aac")
 
-    col_input.title("Brightness")
-    col_input.geometry("600x400")
-    label1 = tkinter.Label(col_input, text="Enter brightness", font=('calibre', 10, 'bold'))
-    label1.pack()
-    def submit():
-        global col
-        e = entry1.get()
-        print(e)
-        col = float(e)
-
-    entry1 = tkinter.Entry(col_input, width=35)
-    entry1.pack()
-    button = Button(col_input, text="Submit", command=lambda: [submit(), col_input.destroy(), col_input.quit()])
-    button.pack()
-    col_input.mainloop()
-    if col != None and final_clip == None:
-        final_clip = import_clip().fx(vfx.colorx, col)
 
 def trim():
-    global final_clip
-    trim_input = Tk()
+    clip = import_clip()
+    print("Please specify the starting second and ending second that you wish to clip: ")
+    start = int(input(""))
+    end = int(input(""))
+    clip_trim = clip.subclip(start, end)
+    print("Please type the file name:")
+    user_input = input("")
+    clip_name = user_input + ".mp4"
+    clip_trim.write_videofile(clip_name, codec="libx264", audio_codec="aac")
 
-    trim_input.title("Trim video")
-    trim_input.geometry("600x400")
-    label1 = tkinter.Label(trim_input, text="Enter starting point", font=('calibre', 10, 'bold'))
-    label1.pack()
-    entry1 = tkinter.Entry(trim_input, width=35)
-    entry1.pack()
-    label2 = tkinter.Label(trim_input, text="Enter ending point", font=('calibre', 10, 'bold'))
-    label2.pack()
-    entry2 = tkinter.Entry(trim_input, width=35)
-    entry2.pack()
-
-    def submit():
-        global start, end
-        e1 = entry1.get()
-        e2 = entry2.get()
-        start = int(e1)
-        end = int(e2)
-    button = Button(trim_input, text="Submit", command=lambda: [submit(), trim_input.destroy(), trim_input.quit()])
-    button.pack()
-    trim_input.mainloop()
-    # starting=int(input("Enter starting point here: "))
-    # ending = int(input("Enter ending point here: "))
-    if (start != None or end!=None) and final_clip == None:
-        final_clip = import_clip().subclip(start,end)
-
-# def audio_file():
-#     import moviepy.editor as mpe
-#     audioclip = mpe.AudioFileClip(import_clip())
-#     videoclip = mpe.videoclip.set_audio(audioclip)
-#     final_clip = videoclip.set_audio(audioclip)
-#     final_clip.write_videofile("final_render.mp4")
 
 def export():
     global final_clip
@@ -164,9 +129,9 @@ b=Button(root, text="Speed", relief=GROOVE, bg="#232323", fg="white", command=sp
 b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
-#color
+#darken/lighten
 
-b=Button(root, text="Brightness", relief=GROOVE, bg="#232323", fg="white", command=color_vfx)
+b=Button(root, text="Brightness", relief=GROOVE, bg="#232323", fg="white", command=brightness_vfx)
 b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
