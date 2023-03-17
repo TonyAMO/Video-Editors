@@ -42,34 +42,20 @@ def mix():
 
 
 def mirror():
+    global final_clip
     clip_mirror = import_clip().fx(vfx.mirror_y)
     print("please type the file name")
     user_input = input("")
     clip_name = user_input + ".mp4"
     clip_mirror.write_videofile(clip_name, codec="libx264")
+    final_clip = clip_mirror
 
 def resize():
-    global final_clip
-    rsz_input = Tk()
-
-    rsz_input.title("Mix videos")
-    rsz_input.geometry("600x400")
-    label1 = tkinter.Label(rsz_input, text="Enter resize amount", font=('calibre', 10, 'bold'))
-    label1.pack()
-
-    def submit():
-        global r
-        e = entry1.get()
-        print(e)
-        r = float(e)
-
-    entry1 = tkinter.Entry(rsz_input, width=35)
-    entry1.pack()
-    button = Button(rsz_input, text="Submit", command=lambda: [submit(), rsz_input.destroy(), rsz_input.quit()])
-    button.pack()
-    rsz_input.mainloop()
-    if r!=None and final_clip==None:
-        final_clip=import_clip().resize(r).margin(top=1)
+    clip = import_clip()
+    w = int(input("add a width"))
+    h = int(input("add a height"))
+    clip_final = clip.resize(width=w, height=h)
+    clip_final.write_videofile("test_resize.mp4", codec="libx264", audio_codec="aac")
 
 def speed_vfx():
     print("Please enter the speed in which you wish to apply to the video (0.5 for half-speed, 2.0 for twice as fast): ")
