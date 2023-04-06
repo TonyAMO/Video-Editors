@@ -5,6 +5,7 @@ from moviepy.editor import *
 from pygame import *
 from file import *
 from ttkwidgets import TimeLine
+from tkVideoPlayer import TkinterVideo
 
 
 #Functions
@@ -103,44 +104,44 @@ root.title("Video editor")
 # height = root.winfo_screenheight()
 # root.geometry('%dx%d' % (width, height))
 root.geometry("850x200")
-root.minsize(1700,400)
-root.maxsize(1700,400)
+root.minsize(1700,1700)
+root.maxsize(1700,1700)
 #root.config(bg='#232323')
 
 
 #mix
 b=Button(root, text="Mix", relief=GROOVE, bg="#232323", fg="white", command=mix)
-b.pack(side="left", padx=20)
+b.pack(side="top", padx=20)
 b.config(width=8, height=3)
 
 #mirror
 
 b=Button(root, text="Mirror", relief=GROOVE, bg="#232323", fg="white", command=mirror)
-b.pack(side="left", padx=20)
+b.pack(side="top", padx=20)
 b.config(width=8, height=3)
 
 #resize
 
 b=Button(root, text="Resize", relief=GROOVE, bg="#232323", fg="white", command=resize)
-b.pack(side="left", padx=20)
+b.pack(side="top", padx=20)
 b.config(width=8, height=3)
 
 #speed
 
 b=Button(root, text="Speed", relief=GROOVE, bg="#232323", fg="white", command=speed_vfx)
-b.pack(side="left", padx=20)
+b.pack(side="top", padx=20)
 b.config(width=8, height=3)
 
 #darken/lighten
 
 b=Button(root, text="Brightness", relief=GROOVE, bg="#232323", fg="white", command=brightness_vfx)
-b.pack(side="left", padx=20)
+b.pack(side="top", padx=20)
 b.config(width=8, height=3)
 
 #trim
 
 b=Button(root, text="Trim", relief=GROOVE, bg="#232323", fg="white", command=trim)
-b.pack(side="left", padx=20)
+b.pack(side="top", padx=20)
 b.config(width=8, height=3)
 
 #audio
@@ -152,8 +153,33 @@ b.config(width=8, height=3)
 #export
 
 b=Button(root, text="Export", relief=GROOVE, bg="#232323", fg="white", command=export)
-b.pack(side="left", padx=20)
+b.pack(side="top", padx=20)
 b.config(width=8, height=3)
+
+
+def importFile():
+    vfile = openFile()
+    if vfile is not None:
+        global filename
+        filename = vfile.title()
+        global videoplayer
+        videoplayer = TkinterVideo(master=root, scaled=True)
+        videoplayer.load(r"{}".format(filename))
+        videoplayer.pack(expand=True, fill="both")
+        videoplayer.play()
+
+importBtn = Button(root, text="Import", command=lambda:importFile())
+importBtn.pack(side=TOP, pady=2)
+
+playBtn = Button(root, text="Play", command=lambda:videoplayer.play())
+playBtn.pack(side=TOP, pady=3)
+
+pauseBtn = Button(root, text="Pause", command=lambda:videoplayer.pause()())
+pauseBtn.pack(side=TOP, pady=4)
+
+stopBtn = Button(root, text="Stop", command=lambda:videoplayer.stop())
+stopBtn.pack(side=TOP, pady=5)
+
 
 tn=5
 tm=0
@@ -161,7 +187,7 @@ tm=0
 timeline = TimeLine(    #track formatting
     root,
     categories={str(key): {"text": "Category {}".format(key)} for key in range(0, tn)},
-    height=100, extend=True, padding=100
+    height=100, extend=True
 )
 menu = tk.Menu(root, tearoff=False) #window open
 
@@ -180,11 +206,11 @@ def delete_marker():
     )
 
 tb=Button(root, text="add marker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
-tb.pack(side="left", padx=20)
+tb.pack(side="top", padx=20)
 tb.config(width=8, height=3)
 
 tb=Button(root, text="delete marker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
-tb.pack(side="left", padx=20)
+tb.pack(side="top", padx=20)
 tb.config(width=8, height=3)
 
 
