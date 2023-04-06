@@ -4,6 +4,8 @@ from tkinter import *
 from moviepy.editor import *
 from pygame import *
 from file import *
+from ttkwidgets import TimeLine
+
 
 #Functions
 
@@ -136,9 +138,9 @@ root.title("Video editor")
 # height = root.winfo_screenheight()
 # root.geometry('%dx%d' % (width, height))
 root.geometry("850x200")
-root.minsize(850,200)
-root.maxsize(850,200)
-root.config(bg='#232323')
+root.minsize(1700,400)
+root.maxsize(1700,400)
+#root.config(bg='#232323')
 
 
 #mix
@@ -188,6 +190,50 @@ b=Button(root, text="Export", relief=GROOVE, bg="#232323", fg="white", command=e
 b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
+tn=5
+tm=0
 
+timeline = TimeLine(    #track formatting
+    root,
+    categories={str(key): {"text": "Category {}".format(key)} for key in range(0, tn)},
+    height=100, extend=True, padding=100
+)
+menu = tk.Menu(root, tearoff=False) #window open
+
+def add_marker():
+    global tn, tm, timeline
+    tm=tm+1
+    timeline.create_marker(str(tm), 1.0, 2.0, text="new category", foreground="white", change_category=True)
+
+def delete_marker():
+    global tn, tm, timeline
+    timeline.destroy()
+    timeline = TimeLine(  # track formatting
+        root,
+        categories={str(key): {"text": "Category {}".format(key)} for key in range(0, tn)},
+        height=100, extend=True
+    )
+
+tb=Button(root, text="add marker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
+tb.pack(side="left", padx=20)
+tb.config(width=8, height=3)
+
+tb=Button(root, text="delete marker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
+tb.pack(side="left", padx=20)
+tb.config(width=8, height=3)
+
+
+timeline.tag_configure("1", right_callback=lambda *args: print(args), menu=menu, foreground="green",
+                       active_background="yellow", hover_border=2, move_callback=lambda *args: print(args)) #track 1 changes color once clicked
+timeline.create_marker("1", 1.0, 2.0, background="white", text="Change Color", tags=("1",), iid="1")        #track 1
+timeline.create_marker("2", 2.0, 3.0, background="green", text="Change Category", foreground="white", iid="2",
+                       change_category=True, image="logo.png")                                              #track 2 can be move to different row
+timeline.create_marker("3", 1.0, 2.0, text="Show Menu", change_category=True, tags=("1",))                  # track 3 can change color when clicked and can be move to different category
+timeline.draw_timeline()
+timeline.pack() #creates timeline
+
+#root.after(2500, lambda: timeline.configure(marker_background="cyan")) #default background color for track 3
+#root.after(5000, lambda: timeline.update_marker("1", background="red")) #default background color for track 1
+root.after(5000, lambda: print(timeline.time))
 
 root.mainloop()
