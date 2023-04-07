@@ -46,55 +46,45 @@ def mix():
 
 def mirror():
     global final_clip
-    clip_mirror = import_clip().fx(vfx.mirror_y)
-    print("please type the file name")
-    user_input = input("")
-    clip_name = user_input + ".mp4"
-    clip_mirror.write_videofile(clip_name, codec="libx264")
+    clip_mirror = final_clip.fx(vfx.mirror_y)
     final_clip = clip_mirror
+    print("mirroring done")
 
 def resize():
-    clip = import_clip()
+    global final_clip
     w = int(input("add a width"))
     h = int(input("add a height"))
-    clip_final = clip.resize(width=w, height=h)
-    clip_final.write_videofile("test_resize.mp4", codec="libx264", audio_codec="aac")
+    clip_final = final_clip.resize(width=w, height=h)
+    final_clip = clip_final
+    print("resizing done")
 
 def speed_vfx():
+    global final_clip
     print("Please enter the speed in which you wish to apply to the video (0.5 for half-speed, 2.0 for twice as fast): ")
     speed_input = float(input(""))
-    clip_speed = import_clip().fx(vfx.speedx, speed_input)
-    print("Please type the file name:")
-    user_input = input("")
-    clip_name = user_input + ".mp4"
-    clip_speed.write_videofile(clip_name, codec="libx264", audio_codec="aac")
-
+    clip_speed = final_clip.fx(vfx.speedx, speed_input)
+    final_clip = clip_speed
+    print("speed adjustment done")
 def brightness_vfx():
-    clip = import_clip()
+    global final_clip
     print("Please specify if you wish to darken or brighten your clip (Less than 1.0 to darken, Greater than 1.0 to brighten): ")
     brightness = float(input(""))
-    clip_brightness = clip.fx( vfx.colorx, brightness)
-    print("Please type the file name:")
-    user_input = input("")
-    clip_name = user_input + ".mp4"
-    clip_brightness.write_videofile(clip_name, codec="libx264", audio_codec="aac")
-
+    clip_brightness = final_clip.fx( vfx.colorx, brightness)
+    final_clip = clip_brightness
+    print("brightness adjustments done")
 
 def trim():
-    clip = import_clip()
+    global final_clip
     print("Please specify the starting second and ending second that you wish to clip: ")
     start = int(input(""))
     end = int(input(""))
-    clip_trim = clip.subclip(start, end)
-    print("Please type the file name:")
-    user_input = input("")
-    clip_name = user_input + ".mp4"
-    clip_trim.write_videofile(clip_name, codec="libx264", audio_codec="aac")
-
+    clip_trim = final_clip.subclip(start, end)
+    final_clip = clip_trim
+    print("trim done")
 
 def export():
     global final_clip
-    exportFile(final_clip)
+    final_clip.write_videofile("All_functions_test.mp4", codec = "libx264", audio_codec="aac")
 
 #main screen
 
