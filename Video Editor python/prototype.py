@@ -48,7 +48,7 @@ def mirror():
     global final_clip
     clip_mirror = final_clip.fx(vfx.mirror_y)
     final_clip = clip_mirror
-    print("mirroring done")
+    print("Mirroring Done!")
 
 def resize():
     global final_clip
@@ -56,7 +56,7 @@ def resize():
     h = int(input("add a height"))
     clip_final = final_clip.resize(width=w, height=h)
     final_clip = clip_final
-    print("resizing done")
+    print("Resizing Done!")
 
 def speed_vfx():
     global final_clip
@@ -64,14 +64,25 @@ def speed_vfx():
     speed_input = float(input(""))
     clip_speed = final_clip.fx(vfx.speedx, speed_input)
     final_clip = clip_speed
-    print("speed adjustment done")
+    print("Speed Adjustment Done!")
 def brightness_vfx():
     global final_clip
     print("Please specify if you wish to darken or brighten your clip (Less than 1.0 to darken, Greater than 1.0 to brighten): ")
     brightness = float(input(""))
     clip_brightness = final_clip.fx( vfx.colorx, brightness)
     final_clip = clip_brightness
-    print("brightness adjustments done")
+    print("Brightness Adjustments Done!")
+
+def colorize():
+    global final_clip
+    print("Please specify luminosity (0-255), contrast (0-255), contrast threshold (0-127) values "
+          "for colorizing your clip: ")
+    red_input = int(input(""))
+    green_input = int(input(""))
+    blue_input = int(input(""))
+    clip_colorize = final_clip.fx(vfx.lum_contrast, red_input, green_input, blue_input)
+    final_clip = clip_colorize
+    print("Colorize Adjustments Done!")
 
 def trim():
     global final_clip
@@ -80,11 +91,15 @@ def trim():
     end = int(input(""))
     clip_trim = final_clip.subclip(start, end)
     final_clip = clip_trim
-    print("trim done")
+    print("Trim Done!")
 
 def export():
     global final_clip
-    final_clip.write_videofile("All_functions_test.mp4", codec = "libx264", audio_codec="aac")
+    print("Please enter the file name: ")
+    user_input = input("")
+    clip_name = user_input + ".mp4"
+    final_clip.write_videofile(clip_name, codec="libx264", audio_codec="aac")
+
 
 #main screen
 
@@ -125,6 +140,12 @@ b.config(width=8, height=3)
 #darken/lighten
 
 b=Button(root, text="Brightness", relief=GROOVE, bg="#232323", fg="white", command=brightness_vfx)
+b.pack(side="top", padx=20)
+b.config(width=8, height=3)
+
+#colorizing
+
+b=Button(root, text="Colorizing", relief=GROOVE, bg="#232323", fg="white", command=colorize)
 b.pack(side="top", padx=20)
 b.config(width=8, height=3)
 
