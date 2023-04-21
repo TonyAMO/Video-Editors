@@ -1,11 +1,14 @@
 #import
 import tkinter
+import numpy as np
+import cv2
 from tkinter import *
 from moviepy.editor import *
 from pygame import *
 from file import *
 from ttkwidgets import TimeLine
 from tkVideoPlayer import TkinterVideo
+
 
 
 #Functions
@@ -96,6 +99,7 @@ def trim():
     final_clip = clip_trim
     print("Trim Done!")
 
+
 def export():
     global final_clip
     print("Please enter the file name: ")
@@ -163,6 +167,11 @@ b.config(width=8, height=3)
 # b=Button(root, text="Audio", relief=GROOVE, bg="#232323", fg="white", command=audio_file)
 # b.pack(side="left", padx=20)
 # b.config(width=8, height=3)
+
+#Tracking
+b=Button(root, text="Tracking", relief=GROOVE, bg="#232323", fg="white", command=ML)
+b.pack(side="left", padx=20)
+b.config(width=8, height=3)
 
 #export
 
