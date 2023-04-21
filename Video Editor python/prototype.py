@@ -45,10 +45,10 @@ def mix():
             clips.append(import_clip())
 
         final_clip=concatenate_videoclips(clips)
-        videoplayer = TkinterVideo(master=root, scaled=True)
-        videoplayer.load(final_clip)
-        videoplayer.pack(expand=True, fill="both", side=BOTTOM)
-        videoplayer.play()
+        # videoplayer = TkinterVideo(master=root, scaled=True)
+        # videoplayer.load(final_clip)
+        # videoplayer.pack(expand=True, fill="both", side=BOTTOM)
+        # videoplayer.play()
 
 def mirror():
     global final_clip
