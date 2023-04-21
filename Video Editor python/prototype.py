@@ -119,43 +119,43 @@ root.maxsize(1700,700)
 
 #mix
 b=Button(root, text="Mix", relief=GROOVE, bg="#232323", fg="white", command=mix)
-b.pack(side="left", padx=20)
+b.pack(side="left", anchor=NW,  padx=20)
 b.config(width=8, height=3)
 
 #mirror
 
 b=Button(root, text="Mirror", relief=GROOVE, bg="#232323", fg="white", command=mirror)
-b.pack(side="left", padx=20)
+b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
 #resize
 
 b=Button(root, text="Resize", relief=GROOVE, bg="#232323", fg="white", command=resize)
-b.pack(side="left", padx=20)
+b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
 #speed
 
 b=Button(root, text="Speed", relief=GROOVE, bg="#232323", fg="white", command=speed_vfx)
-b.pack(side="left", padx=20)
+b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
 #darken/lighten
 
 b=Button(root, text="Brightness", relief=GROOVE, bg="#232323", fg="white", command=brightness_vfx)
-b.pack(side="left", padx=20)
+b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
 #colorizing
 
 b=Button(root, text="Colorizing", relief=GROOVE, bg="#232323", fg="white", command=colorize)
-b.pack(side="top", padx=20)
+b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
 #trim
 
 b=Button(root, text="Trim", relief=GROOVE, bg="#232323", fg="white", command=trim)
-b.pack(side="left", padx=20)
+b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
 #audio
@@ -167,7 +167,7 @@ b.config(width=8, height=3)
 #export
 
 b=Button(root, text="Export", relief=GROOVE, bg="#232323", fg="white", command=export)
-b.pack(side="left", padx=20)
+b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
 
@@ -222,11 +222,11 @@ def delete_marker():
     )
 
 tb=Button(root, text="add marker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
-tb.pack(side="left", padx=20)
+tb.pack(side="left", anchor=NW, padx=20)
 tb.config(width=8, height=3)
 
 tb=Button(root, text="delete marker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
-tb.pack(side="left", padx=20)
+tb.pack(side="left", anchor=NW, padx=20)
 tb.config(width=8, height=3)
 
 
@@ -237,7 +237,7 @@ timeline.create_marker("2", 2.0, 3.0, background="green", text="Change Category"
                        change_category=True, image="logo.png")                                              #track 2 can be move to different row
 timeline.create_marker("3", 1.0, 2.0, text="Show Menu", change_category=True, tags=("1",))                  # track 3 can change color when clicked and can be move to different category
 timeline.draw_timeline()
-timeline.pack(side=RIGHT) #creates timeline
+timeline.pack(side=BOTTOM, anchor=NW) #creates timeline
 
 #root.after(2500, lambda: timeline.configure(marker_background="cyan")) #default background color for track 3
 #root.after(5000, lambda: timeline.update_marker("1", background="red")) #default background color for track 1
