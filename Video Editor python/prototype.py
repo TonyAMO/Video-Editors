@@ -168,10 +168,6 @@ b.config(width=8, height=3)
 # b.pack(side="left", padx=20)
 # b.config(width=8, height=3)
 
-#Tracking
-b=Button(root, text="Tracking", relief=GROOVE, bg="#232323", fg="white", command=ML)
-b.pack(side="left", padx=20)
-b.config(width=8, height=3)
 
 #export
 
