@@ -1,5 +1,6 @@
 #import
 import tkinter
+import directory
 import numpy as np
 import cv2
 from tkinter import *
@@ -13,14 +14,25 @@ from tkVideoPlayer import TkinterVideo
 
 #Functions
 global videoplayer
+exportPath = None
 final_clip= None
 
+def importFile():
+    global exportPath
+    global final_clip
+    final_clip = open(exportPath, 'r')
+    if final_clip is not None:
+        videoplayer = TkinterVideo(master=root, scaled=True)
+        videoplayer.load(r"{}".format(exportPath))
+        videoplayer.pack(expand=True, fill="both")
+        videoplayer.play()
 
 def import_clip():
     return VideoFileClip(openFile())
 
 def mix():
     global final_clip
+    global exportPath
     mix_input = Tk()
 
     mix_input.title("Mix videos")
@@ -45,9 +57,11 @@ def mix():
             clips.append(import_clip())
 
         final_clip=concatenate_videoclips(clips)
-
+        exportPath = directory.path() + "\\test.mp4"
+        final_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
+        importFile()
         # videoplayer = TkinterVideo(master=root, scaled=True)
-        videoplayer.load(final_clip)
+        #videoplayer.load(final_clip)
         # videoplayer.pack(expand=True, fill="both", side=BOTTOM)
         # videoplayer.play()
 
@@ -247,15 +261,7 @@ tb.config(width=8, height=3)
 menu = tk.Menu(root, tearoff=False) #window open
 
 
-def importFile():
-    vfile = openFile()
-    if vfile is not None:
-        global filename
-        filename = vfile.title()
-        videoplayer = TkinterVideo(master=root, scaled=True)
-        videoplayer.load(r"{}".format(filename))
-        videoplayer.pack(expand=True, fill="both")
-        videoplayer.play()
+
 
 importBtn = Button(root, text="Import", command=lambda:importFile())
 importBtn.pack(side=TOP, pady=2)
