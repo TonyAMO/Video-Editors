@@ -45,17 +45,17 @@ def mix():
             clips.append(import_clip())
 
         final_clip=concatenate_videoclips(clips)
-<<<<<<< Updated upstream
+
         # videoplayer = TkinterVideo(master=root, scaled=True)
-        # videoplayer.load(final_clip)
+        videoplayer.load(final_clip)
         # videoplayer.pack(expand=True, fill="both", side=BOTTOM)
         # videoplayer.play()
-=======
+
         #videoplayer = TkinterVideo(master=root, scaled=True)
        #videoplayer.load(final_clip)
        #videoplayer.pack(expand=True, fill="both", side=BOTTOM)
         #videoplayer.play()
->>>>>>> Stashed changes
+
 
 def mirror():
     global final_clip
@@ -159,8 +159,27 @@ root.minsize(1700,700)
 root.maxsize(1700,700)
 #root.config(bg='#232323')
 
+
+tn=5
+tm=0
+
+def add_marker():
+    global tn, tm, timeline
+    tm=tm+1
+    timeline.create_marker(str(tm), 1.0, 2.0, text="new category", foreground="white", change_category=True)
+
+def delete_marker():
+    global tn, tm, timeline
+    timeline.destroy()
+    timeline = TimeLine(  # track formatting
+        root,
+        categories={str(key): {"text": "Category {}".format(key)} for key in range(0, tn)},
+        height=100, extend=True
+    )
+
+
 #mix
-b=Button(root, text="remove all objects", relief=GROOVE, bg="#232323", fg="white", command=remove_objects)
+b=Button(root, text="remove all objects", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
 b.pack(side="left", anchor=NW,  padx=20)
 b.config(width=8, height=3)
 
@@ -218,6 +237,15 @@ b=Button(root, text="Export", relief=GROOVE, bg="#232323", fg="white", command=e
 b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
+tb=Button(root, text="add marker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
+tb.pack(side="left", anchor=NW, padx=20)
+tb.config(width=8, height=3)
+
+tb=Button(root, text="delete marker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
+tb.pack(side="left", anchor=NW, padx=20)
+tb.config(width=8, height=3)
+menu = tk.Menu(root, tearoff=False) #window open
+
 
 def importFile():
     vfile = openFile()
@@ -242,40 +270,20 @@ stopBtn = Button(root, text="Stop", command=lambda:videoplayer.stop())
 stopBtn.pack(side=TOP, pady=5)
 
 
-tn=5
-tm=0
+
 
 timeline = TimeLine(    #track formatting
     root,
     categories={str(key): {"text": "Category {}".format(key)} for key in range(0, tn)},
     height=100, extend=True
 )
-menu = tk.Menu(root, tearoff=False) #window open
 
 
 
 
-def add_marker():
-    global tn, tm, timeline
-    tm=tm+1
-    timeline.create_marker(str(tm), 1.0, 2.0, text="new category", foreground="white", change_category=True)
 
-def delete_marker():
-    global tn, tm, timeline
-    timeline.destroy()
-    timeline = TimeLine(  # track formatting
-        root,
-        categories={str(key): {"text": "Category {}".format(key)} for key in range(0, tn)},
-        height=100, extend=True
-    )
 
-tb=Button(root, text="add marker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
-tb.pack(side="left", anchor=NW, padx=20)
-tb.config(width=8, height=3)
 
-tb=Button(root, text="delete marker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
-tb.pack(side="left", anchor=NW, padx=20)
-tb.config(width=8, height=3)
 
 
 timeline.tag_configure("1", right_callback=lambda *args: print(args), menu=menu, foreground="green",
