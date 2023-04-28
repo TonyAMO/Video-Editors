@@ -220,6 +220,11 @@ b=Button(root, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white
 b.pack(side="left", anchor=NW,  padx=20)
 b.config(width=8, height=3)
 
+#background
+b=Button(root, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white", command=background_removal)
+b.pack(side="left", anchor=NW,  padx=20)
+b.config(width=8, height=3)
+
 #mix
 b=Button(root, text="Mix", relief=GROOVE, bg="#232323", fg="white", command=mix)
 b.pack(side="left", anchor=NW,  padx=20)
