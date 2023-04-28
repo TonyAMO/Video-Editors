@@ -45,10 +45,17 @@ def mix():
             clips.append(import_clip())
 
         final_clip=concatenate_videoclips(clips)
+<<<<<<< Updated upstream
         # videoplayer = TkinterVideo(master=root, scaled=True)
         # videoplayer.load(final_clip)
         # videoplayer.pack(expand=True, fill="both", side=BOTTOM)
         # videoplayer.play()
+=======
+        #videoplayer = TkinterVideo(master=root, scaled=True)
+       #videoplayer.load(final_clip)
+       #videoplayer.pack(expand=True, fill="both", side=BOTTOM)
+        #videoplayer.play()
+>>>>>>> Stashed changes
 
 def mirror():
     global final_clip
@@ -79,6 +86,38 @@ def brightness_vfx():
     final_clip = clip_brightness
     print("Brightness Adjustments Done!")
 
+def foreground_removal():
+    video = cv2.VideoCapture("C:\Datasets\stationary cam.mp4")
+
+    FOI = video.get(cv2.CAP_PROP_FRAME_COUNT) * np.random.uniform(size=30)
+
+    # creating an array of frames from frames chosen above
+    frames = []
+    for frameOI in FOI:
+        video.set(cv2.CAP_PROP_POS_FRAMES, frameOI)
+        ret, frame = video.read()
+        frames.append(frame)
+
+    # calculate the average
+    backgroundFrame = np.median(frames, axis=0).astype(dtype=np.uint8)
+    cv2.imshow("background only", backgroundFrame)
+def background_removal():
+    video = cv2.VideoCapture('C:\Datasets\MLB.mp4')
+    fgbg = cv2.createBackgroundSubtractorMOG2()
+
+    while (1):
+        ret, frame = video.read()
+
+        fgmask = fgbg.apply(frame)
+
+        cv2.imshow('fgmask', fgmask)
+
+        k = cv2.waitKey(30) & 0xff
+        if k == 27:
+            break
+
+    video.release()
+    cv2.destroyAllWindows()
 def colorize():
     global final_clip
     print("Please specify luminosity (0-255), contrast (0-255), contrast threshold (0-127) values "
@@ -120,6 +159,10 @@ root.minsize(1700,700)
 root.maxsize(1700,700)
 #root.config(bg='#232323')
 
+#mix
+b=Button(root, text="remove all objects", relief=GROOVE, bg="#232323", fg="white", command=remove_objects)
+b.pack(side="left", anchor=NW,  padx=20)
+b.config(width=8, height=3)
 
 #mix
 b=Button(root, text="Mix", relief=GROOVE, bg="#232323", fg="white", command=mix)
