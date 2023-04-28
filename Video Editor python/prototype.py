@@ -101,7 +101,7 @@ def brightness_vfx():
     print("Brightness Adjustments Done!")
 
 def foreground_removal():
-    video = cv2.VideoCapture("C:\Datasets\stationary cam.mp4")
+    video = cv2.VideoCapture(exportPath)
 
     FOI = video.get(cv2.CAP_PROP_FRAME_COUNT) * np.random.uniform(size=30)
 
@@ -286,16 +286,14 @@ menu = tk.Menu(root, tearoff=False) #window open
 
 
 
-importBtn = Button(root, text="Import", command=lambda:importFile())
-importBtn.pack(side=TOP, pady=2)
 
-playBtn = Button(root, text="Play", command=lambda:videoplayer.play())
+playBtn = Button(root, text="Play", command=lambda:videoplayer.play)
 playBtn.pack(side=TOP, pady=3)
 
-pauseBtn = Button(root, text="Pause", command=lambda:videoplayer.pause()())
+pauseBtn = Button(root, text="Pause", command=lambda:videoplayer.pause)
 pauseBtn.pack(side=TOP, pady=4)
 
-stopBtn = Button(root, text="Stop", command=lambda:videoplayer.stop())
+stopBtn = Button(root, text="Stop", command=lambda:videoplayer.stop)
 stopBtn.pack(side=TOP, pady=5)
 
 

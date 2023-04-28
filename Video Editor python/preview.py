@@ -29,7 +29,7 @@ importBtn.pack(side=TOP, pady=2)
 playBtn = Button(window, text="Play", command=lambda:videoplayer.play())
 playBtn.pack(side=TOP, pady=3)
 
-pauseBtn = Button(window, text="Pause", command=lambda:videoplayer.pause()())
+pauseBtn = Button(window, text="Pause", command=lambda:videoplayer.pause())
 pauseBtn.pack(side=TOP, pady=4)
 
 stopBtn = Button(window, text="Stop", command=lambda:videoplayer.stop())
