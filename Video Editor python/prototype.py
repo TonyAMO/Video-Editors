@@ -24,7 +24,7 @@ def importFile():
     if final_clip is not None:
         videoplayer = TkinterVideo(master=root, scaled=True)
         videoplayer.load(r"{}".format(exportPath))
-        videoplayer.pack(expand=True, fill="both")
+        videoplayer.pack(expand=True, side='bottom', anchor=S)
         videoplayer.play()
 
 def import_clip():
@@ -60,15 +60,6 @@ def mix():
         exportPath = directory.path() + "\\test.mp4"
         final_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
         importFile()
-        # videoplayer = TkinterVideo(master=root, scaled=True)
-        #videoplayer.load(final_clip)
-        # videoplayer.pack(expand=True, fill="both", side=BOTTOM)
-        # videoplayer.play()
-
-        #videoplayer = TkinterVideo(master=root, scaled=True)
-       #videoplayer.load(final_clip)
-       #videoplayer.pack(expand=True, fill="both", side=BOTTOM)
-        #videoplayer.play()
 
 
 def mirror():
@@ -116,7 +107,7 @@ def foreground_removal():
     backgroundFrame = np.median(frames, axis=0).astype(dtype=np.uint8)
     cv2.imshow("background only", backgroundFrame)
 def background_removal():
-    video = cv2.VideoCapture('C:\Datasets\MLB.mp4')
+    video = cv2.VideoCapture(exportPath)
     fgbg = cv2.createBackgroundSubtractorMOG2()
 
     while (1):
@@ -293,13 +284,13 @@ menu = tk.Menu(root, tearoff=False) #window open
 
 
 playBtn = Button(root, text="Play", command=lambda:videoplayer.play)
-playBtn.pack(side=TOP, pady=3)
+playBtn.pack(side='top', anchor=SW, padx=5)
 
 pauseBtn = Button(root, text="Pause", command=lambda:videoplayer.pause)
-pauseBtn.pack(side=TOP, pady=4)
+pauseBtn.pack(side='top',anchor=SW, padx=5)
 
 stopBtn = Button(root, text="Stop", command=lambda:videoplayer.stop)
-stopBtn.pack(side=TOP, pady=5)
+stopBtn.pack(side='top',anchor=SW, padx=5)
 
 
 
