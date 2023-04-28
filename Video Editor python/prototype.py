@@ -152,6 +152,29 @@ def trim():
     final_clip = clip_trim
     print("Trim Done!")
 
+def fadeinfadeout():
+    print("You can concatenate up to 3 clips using the fade-in/out transition feature.")
+    choice = int(input("Please specify number of clips to concatenate with a fade-in/out transition feature."))
+    if choice == 1:
+        clip1 = import_clip().fx(vfx.fadein, 1).fx(vfx.fadeout, 1)
+        clipname = input("Please enter the file name: ")
+        clip_name = clipname + ".mp4"
+        clip1.write_videofile(clip_name, codec="libx264", audio_codec="aac")
+    if choice == 2:
+        clip1 = import_clip().fx(vfx.fadein, 1).fx(vfx.fadeout, 1)
+        clip2 = import_clip().fx(vfx.fadein, 1).fx(vfx.fadeout, 1)
+        combined = concatenate_videoclips([clip1, clip2])
+        clipname = input("Please enter the file name: ")
+        clip_name = clipname + ".mp4"
+        combined.write_videofile(clip_name, codec="libx264", audio_codec="aac")
+    if choice == 3:
+        clip1 = import_clip().fx(vfx.fadein, 1).fx(vfx.fadeout, 1)
+        clip2 = import_clip().fx(vfx.fadein, 1).fx(vfx.fadeout, 1)
+        clip3 = import_clip().fx(vfx.fadein, 1).fx(vfx.fadeout, 1)
+        combined = concatenate_videoclips([clip1, clip2, clip3])
+        clipname = input("Please enter the file name: ")
+        clip_name = clipname + ".mp4"
+        combined.write_videofile(clip_name, codec="libx264", audio_codec="aac")
 
 def export():
     global final_clip
@@ -192,8 +215,8 @@ def delete_marker():
     )
 
 
-#mix
-b=Button(root, text="remove all objects", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
+#foreground
+b=Button(root, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
 b.pack(side="left", anchor=NW,  padx=20)
 b.config(width=8, height=3)
 
@@ -238,11 +261,11 @@ b=Button(root, text="Trim", relief=GROOVE, bg="#232323", fg="white", command=tri
 b.pack(side="left", anchor=NW, padx=20)
 b.config(width=8, height=3)
 
-#audio
+#fade-in/out
 
-# b=Button(root, text="Audio", relief=GROOVE, bg="#232323", fg="white", command=audio_file)
-# b.pack(side="left", padx=20)
-# b.config(width=8, height=3)
+b=Button(root, text="Fade-In/Out", relief=GROOVE, bg="#232323", fg="white", command=fadeinfadeout)
+b.pack(side="left", anchor=NW, padx=20)
+b.config(width=8, height=3)
 
 
 #export
