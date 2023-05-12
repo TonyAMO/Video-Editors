@@ -92,36 +92,38 @@ def mirror():
     global edited_clip
     clip_mirror = edited_clip.fx(vfx.mirror_y)
     edited_clip = clip_mirror
-    exportPath = directory.path() + "\\test.mp4"
-    edited_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
-    importFile()
-    print("Mirroring Done!")
+    # exportPath = directory.path() + "\\test.mp4"
+    # edited_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
+    # importFile()
+    # print("Mirroring Done!")
 
 def resize():
     global final_clip
+    global edited_clip
     w = int(input("add a width"))
     h = int(input("add a height"))
-    clip_final = final_clip.resize(width=w, height=h)
-    final_clip = clip_final
+    clip_final = edited_clip.resize(width=w, height=h)
+    edited_clip = clip_final
     print("Resizing Done!")
-    exportPath = directory.path() + "\\test.mp4"
-    final_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
-    importFile()
-    print("Mirroring Done!")
+    # exportPath = directory.path() + "\\test.mp4"
+    # final_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
+    # importFile()
 
 def speed_vfx():
     global final_clip
+    global edited_clip
     print("Please enter the speed in which you wish to apply to the video (0.5 for half-speed, 2.0 for twice as fast): ")
     speed_input = float(input(""))
-    clip_speed = final_clip.fx(vfx.speedx, speed_input)
-    final_clip = clip_speed
+    clip_speed = edited_clip.fx(vfx.speedx, speed_input)
+    edited_clip = clip_speed
     print("Speed Adjustment Done!")
 def brightness_vfx():
     global final_clip
+    global edited_clip
     print("Please specify if you wish to darken or brighten your clip (Less than 1.0 to darken, Greater than 1.0 to brighten): ")
     brightness = float(input(""))
-    clip_brightness = final_clip.fx(vfx.colorx, brightness)
-    final_clip = clip_brightness
+    clip_brightness = edited_clip.fx(vfx.colorx, brightness)
+    edited_clip = clip_brightness
     print("Brightness Adjustments Done!")
 
 def foreground_removal():
@@ -158,22 +160,24 @@ def background_removal():
     cv2.destroyAllWindows()
 def colorize():
     global final_clip
+    global edited_clip
     print("Please specify luminosity (0-255), contrast (0-255), contrast threshold (0-127) values "
           "for colorizing your clip: ")
     red_input = int(input(""))
     green_input = int(input(""))
     blue_input = int(input(""))
-    clip_colorize = final_clip.fx(vfx.lum_contrast, red_input, green_input, blue_input)
-    final_clip = clip_colorize
+    clip_colorize = edited_clip.fx(vfx.lum_contrast, red_input, green_input, blue_input)
+    edited_clip = clip_colorize
     print("Colorize Adjustments Done!")
 
 def trim():
     global final_clip
+    global edited_clip
     print("Please specify the starting second and ending second that you wish to clip: ")
     start = int(input(""))
     end = int(input(""))
-    clip_trim = final_clip.subclip(start, end)
-    final_clip = clip_trim
+    clip_trim = edited_clip.subclip(start, end)
+    edited_clip = clip_trim
     print("Trim Done!")
 
 def fadeinfadeout():
@@ -202,10 +206,11 @@ def fadeinfadeout():
 
 def export():
     global final_clip
+    global edited_clip
     print("Please enter the file name: ")
     user_input = input("")
     clip_name = user_input + ".mp4"
-    final_clip.write_videofile(clip_name, codec="libx264", audio_codec="aac")
+    edited_clip.write_videofile(clip_name, codec="libx264", audio_codec="aac")
 
 
 #main screen
