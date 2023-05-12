@@ -35,6 +35,9 @@ pauseBtn.pack(side=TOP, pady=4)
 stopBtn = Button(window, text="Stop", command=lambda:videoplayer.stop())
 stopBtn.pack(side=TOP, pady=5)
 
+forgetPreview = Button(window, text="Delete", command=lambda:videoplayer.pack_forget())
+forgetPreview.pack(side=TOP, pady=5)
+
 timeline = Scale(window, from_=0, to=100, orient='horizontal')
 timeline.pack()
 

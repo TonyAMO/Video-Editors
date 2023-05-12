@@ -21,16 +21,31 @@ final_clip= None
 edited_clip=None
 videoplayer = None
 
+def replace_player(player):
+    global exportPath
+    global videoplayer
+    global final_clip
+    # delete the existing player
+    player.pack_forget()
+    final_clip = open(exportPath, 'r')
+    # create a new player and pack it into the window
+    player2 = TkinterVideo(master=root, scaled=True, keep_aspect=True)
+    if final_clip is not None:
+        player2.load(r"{}".format(exportPath))
+        player2.pack(expand=True, fill="both")
+        player2.play()
+
+
 def importFile():
     global exportPath
     global videoplayer
     global final_clip
     final_clip = open(exportPath, 'r')
     videoplayer = TkinterVideo(master=root, scaled=True, keep_aspect=True)
-    if final_clip is not None:
+    if videoplayer.winfo_ismapped():
+        replace_player(videoplayer)
+    if final_clip is not None and not videoplayer.winfo_ismapped():
         videoplayer.load(r"{}".format(exportPath))
-        if videoplayer.winfo_ismapped():
-            videoplayer.pack_forget()
         videoplayer.pack(expand=True, fill="both")
         videoplayer.play()
 
