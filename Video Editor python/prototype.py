@@ -314,8 +314,6 @@ timeline = TimeLine(    #track formatting
 
 
 
-
-
 timeline.tag_configure("1", right_callback=lambda *args: print(args), menu=menu, foreground="green",
                        active_background="yellow", hover_border=2, move_callback=lambda *args: print(args)) #track 1 changes color once clicked
 timeline.create_marker("1", 1.0, 2.0, background="white", text="Change Color", tags=("1",), iid="1")        #track 1
@@ -323,7 +321,7 @@ timeline.create_marker("2", 2.0, 3.0, background="green", text="Change Category"
                        change_category=True, image="logo.png")                                              #track 2 can be move to different row
 timeline.create_marker("3", 1.0, 2.0, text="Show Menu", change_category=True, tags=("1",))                  # track 3 can change color when clicked and can be move to different category
 timeline.draw_timeline()
-timeline.pack(side=BOTTOM, anchor=NW) #creates timeline
+timeline.pack(side="bottom") #creates timeline
 
 #root.after(2500, lambda: timeline.configure(marker_background="cyan")) #default background color for track 3
 #root.after(5000, lambda: timeline.update_marker("1", background="red")) #default background color for track 1
