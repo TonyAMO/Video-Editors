@@ -18,23 +18,30 @@ from tkVideoPlayer import TkinterVideo
 
 exportPath = None
 final_clip= None
+edited_clip=None
+videoplayer = None
 
 def importFile():
     global exportPath
     global videoplayer
     global final_clip
     final_clip = open(exportPath, 'r')
+    videoplayer = TkinterVideo(master=root, scaled=True, keep_aspect=True)
     if final_clip is not None:
-        videoplayer = TkinterVideo(master=root, scaled=True, keep_aspect=True)
         videoplayer.load(r"{}".format(exportPath))
+        if videoplayer.winfo_ismapped():
+            videoplayer.pack_forget()
         videoplayer.pack(expand=True, fill="both")
         videoplayer.play()
 
 def import_clip():
-    return VideoFileClip(openFile())
+    global edited_clip
+    edited_clip=VideoFileClip(openFile())
+    return edited_clip
 
 def mix():
     global final_clip
+    global edited_clip
     global exportPath
     mix_input = Tk()
 
@@ -59,16 +66,20 @@ def mix():
         for c in range(0,i):
             clips.append(import_clip())
 
-        final_clip=concatenate_videoclips(clips)
+        edited_clip=concatenate_videoclips(clips)
         exportPath = directory.path() + "\\test.mp4"
-        final_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
+        edited_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
         importFile()
 
 
 def mirror():
     global final_clip
-    clip_mirror = final_clip.fx(vfx.mirror_y)
-    final_clip = clip_mirror
+    global edited_clip
+    clip_mirror = edited_clip.fx(vfx.mirror_y)
+    edited_clip = clip_mirror
+    exportPath = directory.path() + "\\test.mp4"
+    edited_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
+    importFile()
     print("Mirroring Done!")
 
 def resize():
@@ -78,6 +89,10 @@ def resize():
     clip_final = final_clip.resize(width=w, height=h)
     final_clip = clip_final
     print("Resizing Done!")
+    exportPath = directory.path() + "\\test.mp4"
+    final_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
+    importFile()
+    print("Mirroring Done!")
 
 def speed_vfx():
     global final_clip
@@ -90,7 +105,7 @@ def brightness_vfx():
     global final_clip
     print("Please specify if you wish to darken or brighten your clip (Less than 1.0 to darken, Greater than 1.0 to brighten): ")
     brightness = float(input(""))
-    clip_brightness = final_clip.fx( vfx.colorx, brightness)
+    clip_brightness = final_clip.fx(vfx.colorx, brightness)
     final_clip = clip_brightness
     print("Brightness Adjustments Done!")
 
@@ -108,7 +123,7 @@ def foreground_removal():
 
     # calculate the average
     backgroundFrame = np.median(frames, axis=0).astype(dtype=np.uint8)
-    cv2.imshow("background only", backgroundFrame)
+    cv2.imshow("Foreground only", backgroundFrame)
 def background_removal():
     video = cv2.VideoCapture(exportPath)
     fgbg = cv2.createBackgroundSubtractorMOG2()
@@ -118,7 +133,7 @@ def background_removal():
 
         fgmask = fgbg.apply(frame)
 
-        cv2.imshow('fgmask', fgmask)
+        cv2.imshow('Background Mask', fgmask)
 
         k = cv2.waitKey(30) & 0xff
         if k == 27:
@@ -213,12 +228,12 @@ button_frame = tk.Frame(root)
 button_frame.pack(side="top", padx=10, pady=10)
 
 #foreground
-b=Button(button_frame, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
+b=Button(button_frame, text="FG\nRemoval", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
 b.pack(side="left",  padx=20)
 b.config(width=8, height=3)
 
 #background
-b=Button(button_frame, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white", command=background_removal)
+b=Button(button_frame, text="BG\nRemoval", relief=GROOVE, bg="#232323", fg="white", command=background_removal)
 b.pack(side="left",  padx=20)
 b.config(width=8, height=3)
 
@@ -265,7 +280,7 @@ b.config(width=8, height=3)
 
 #fade-in/out
 
-b=Button(button_frame, text="Fade-In/Out", relief=GROOVE, bg="#232323", fg="white", command=fadeinfadeout)
+b=Button(button_frame, text="Fade-\nIn/Out", relief=GROOVE, bg="#232323", fg="white", command=fadeinfadeout)
 b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
@@ -276,11 +291,11 @@ b=Button(button_frame, text="Export", relief=GROOVE, bg="#232323", fg="white", c
 b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
-tb=Button(button_frame, text="add marker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
+tb=Button(button_frame, text="add\nmarker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
 tb.pack(side="left", padx=20)
 tb.config(width=8, height=3)
 
-tb=Button(button_frame, text="delete marker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
+tb=Button(button_frame, text="delete\nmarker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
 tb.pack(side="left", padx=20)
 tb.config(width=8, height=3)
 menu = tk.Menu(root, tearoff=False) #window open
