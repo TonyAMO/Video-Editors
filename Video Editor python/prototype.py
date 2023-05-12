@@ -243,12 +243,12 @@ button_frame = tk.Frame(root)
 button_frame.pack(side="top", padx=10, pady=10)
 
 #foreground
-b=Button(button_frame, text="FG\nRemoval", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
+b=Button(button_frame, text="Foreground\nRemoval", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
 b.pack(side="left",  padx=20)
 b.config(width=8, height=3)
 
 #background
-b=Button(button_frame, text="BG\nRemoval", relief=GROOVE, bg="#232323", fg="white", command=background_removal)
+b=Button(button_frame, text="BackGround\nRemoval", relief=GROOVE, bg="#232323", fg="white", command=background_removal)
 b.pack(side="left",  padx=20)
 b.config(width=8, height=3)
 
@@ -306,11 +306,11 @@ b=Button(button_frame, text="Export", relief=GROOVE, bg="#232323", fg="white", c
 b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
-tb=Button(button_frame, text="add\nmarker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
+tb=Button(button_frame, text="Add\nMarker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
 tb.pack(side="left", padx=20)
 tb.config(width=8, height=3)
 
-tb=Button(button_frame, text="delete\nmarker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
+tb=Button(button_frame, text="Delete\nMarker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
 tb.pack(side="left", padx=20)
 tb.config(width=8, height=3)
 menu = tk.Menu(root, tearoff=False) #window open
