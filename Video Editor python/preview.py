@@ -35,6 +35,16 @@ pauseBtn.pack(side=TOP, pady=4)
 stopBtn = Button(window, text="Stop", command=lambda:videoplayer.stop())
 stopBtn.pack(side=TOP, pady=5)
 
+timeline = Scale(window, from_=0, to=100, orient='horizontal')
+timeline.pack()
+
+# define a function to update the timeline with the current playback time
+def update_timeline(time):
+    timeline.set(time)
+
+# register the update_timeline() function with the video player
+lambda:videoplayer.set_time_callback(update_timeline)
+
 # videoplayer = TkinterVideo(master=root, scaled=True)
 #
 # videoplayer.load(file.openFile())
