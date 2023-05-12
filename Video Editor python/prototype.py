@@ -15,18 +15,19 @@ from tkVideoPlayer import TkinterVideo
 
 
 #Functions
-global videoplayer
+
 exportPath = None
 final_clip= None
 
 def importFile():
     global exportPath
+    global videoplayer
     global final_clip
     final_clip = open(exportPath, 'r')
     if final_clip is not None:
-        videoplayer = TkinterVideo(master=root, scaled=True)
+        videoplayer = TkinterVideo(master=root, scaled=True, keep_aspect=True)
         videoplayer.load(r"{}".format(exportPath))
-        videoplayer.pack(expand=True, fill='both',side='bottom')
+        videoplayer.pack(expand=True, fill="both")
         videoplayer.play()
 
 def import_clip():
@@ -285,17 +286,18 @@ tb.config(width=8, height=3)
 menu = tk.Menu(root, tearoff=False) #window open
 
 
+button_frame_1 = tk.Frame(root)
+button_frame_1.pack(side="top", padx=10, pady=10)
 
 
+playBtn = Button(button_frame_1, text="Play", command=lambda:videoplayer.play)
+playBtn.pack(side='left', padx=5)
 
-playBtn = Button(root, text="Play", command=lambda:videoplayer.play)
-playBtn.pack(side='top', anchor=SW, padx=5)
+pauseBtn = Button(button_frame_1, text="Pause", command=lambda:videoplayer.pause)
+pauseBtn.pack(side='left', padx=5)
 
-pauseBtn = Button(root, text="Pause", command=lambda:videoplayer.pause)
-pauseBtn.pack(side='top',anchor=SW, padx=5)
-
-stopBtn = Button(root, text="Stop", command=lambda:videoplayer.stop)
-stopBtn.pack(side='top',anchor=SW, padx=5)
+stopBtn = Button(button_frame_1, text="Stop", command=lambda:videoplayer.stop)
+stopBtn.pack(side='left', padx=5)
 
 
 
