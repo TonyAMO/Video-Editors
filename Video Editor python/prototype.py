@@ -12,6 +12,8 @@ from tkVideoPlayer import TkinterVideo
 
 
 
+
+
 #Functions
 global videoplayer
 exportPath = None
@@ -24,7 +26,7 @@ def importFile():
     if final_clip is not None:
         videoplayer = TkinterVideo(master=root, scaled=True)
         videoplayer.load(r"{}".format(exportPath))
-        videoplayer.pack(expand=True, side='bottom', anchor=S)
+        videoplayer.pack(expand=True, fill='both',side='bottom')
         videoplayer.play()
 
 def import_clip():
@@ -206,76 +208,79 @@ def delete_marker():
     )
 
 
+button_frame = tk.Frame(root)
+button_frame.pack(side="top", padx=10, pady=10)
+
 #foreground
-b=Button(root, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
-b.pack(side="left", anchor=NW,  padx=20)
+b=Button(button_frame, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white", command=foreground_removal)
+b.pack(side="left",  padx=20)
 b.config(width=8, height=3)
 
 #background
-b=Button(root, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white", command=background_removal)
-b.pack(side="left", anchor=NW,  padx=20)
+b=Button(button_frame, text="Foreground Removal", relief=GROOVE, bg="#232323", fg="white", command=background_removal)
+b.pack(side="left",  padx=20)
 b.config(width=8, height=3)
 
 #mix
-b=Button(root, text="Mix", relief=GROOVE, bg="#232323", fg="white", command=mix)
-b.pack(side="left", anchor=NW,  padx=20)
+b=Button(button_frame, text="Mix", relief=GROOVE, bg="#232323", fg="white", command=mix)
+b.pack(side="left",  padx=20)
 b.config(width=8, height=3)
 
 #mirror
 
-b=Button(root, text="Mirror", relief=GROOVE, bg="#232323", fg="white", command=mirror)
-b.pack(side="left", anchor=NW, padx=20)
+b=Button(button_frame, text="Mirror", relief=GROOVE, bg="#232323", fg="white", command=mirror)
+b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
 #resize
 
-b=Button(root, text="Resize", relief=GROOVE, bg="#232323", fg="white", command=resize)
-b.pack(side="left", anchor=NW, padx=20)
+b=Button(button_frame, text="Resize", relief=GROOVE, bg="#232323", fg="white", command=resize)
+b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
 #speed
 
-b=Button(root, text="Speed", relief=GROOVE, bg="#232323", fg="white", command=speed_vfx)
-b.pack(side="left", anchor=NW, padx=20)
+b=Button(button_frame, text="Speed", relief=GROOVE, bg="#232323", fg="white", command=speed_vfx)
+b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
 #darken/lighten
 
-b=Button(root, text="Brightness", relief=GROOVE, bg="#232323", fg="white", command=brightness_vfx)
-b.pack(side="left", anchor=NW, padx=20)
+b=Button(button_frame, text="Brightness", relief=GROOVE, bg="#232323", fg="white", command=brightness_vfx)
+b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
 #colorizing
 
-b=Button(root, text="Colorizing", relief=GROOVE, bg="#232323", fg="white", command=colorize)
-b.pack(side="left", anchor=NW, padx=20)
+b=Button(button_frame, text="Colorizing", relief=GROOVE, bg="#232323", fg="white", command=colorize)
+b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
 #trim
 
-b=Button(root, text="Trim", relief=GROOVE, bg="#232323", fg="white", command=trim)
-b.pack(side="left", anchor=NW, padx=20)
+b=Button(button_frame, text="Trim", relief=GROOVE, bg="#232323", fg="white", command=trim)
+b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
 #fade-in/out
 
-b=Button(root, text="Fade-In/Out", relief=GROOVE, bg="#232323", fg="white", command=fadeinfadeout)
-b.pack(side="left", anchor=NW, padx=20)
+b=Button(button_frame, text="Fade-In/Out", relief=GROOVE, bg="#232323", fg="white", command=fadeinfadeout)
+b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
 
 #export
 
-b=Button(root, text="Export", relief=GROOVE, bg="#232323", fg="white", command=export)
-b.pack(side="left", anchor=NW, padx=20)
+b=Button(button_frame, text="Export", relief=GROOVE, bg="#232323", fg="white", command=export)
+b.pack(side="left", padx=20)
 b.config(width=8, height=3)
 
-tb=Button(root, text="add marker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
-tb.pack(side="left", anchor=NW, padx=20)
+tb=Button(button_frame, text="add marker", relief=GROOVE, bg="#232323", fg="white", command=add_marker)
+tb.pack(side="left", padx=20)
 tb.config(width=8, height=3)
 
-tb=Button(root, text="delete marker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
-tb.pack(side="left", anchor=NW, padx=20)
+tb=Button(button_frame, text="delete marker", relief=GROOVE, bg="#232323", fg="white", command=delete_marker)
+tb.pack(side="left", padx=20)
 tb.config(width=8, height=3)
 menu = tk.Menu(root, tearoff=False) #window open
 

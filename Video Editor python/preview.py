@@ -20,7 +20,7 @@ def importFile():
         global videoplayer
         videoplayer = TkinterVideo(master=window, scaled=True)
         videoplayer.load(r"{}".format(filename))
-        videoplayer.pack(expand=True, fill="both")
+        videoplayer.pack(expand=True, fill="both", side=LEFT, anchor=S)
         videoplayer.play()
 
 importBtn = Button(window, text="Import", command=lambda:importFile())
