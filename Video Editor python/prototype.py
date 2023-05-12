@@ -95,7 +95,7 @@ def mirror():
     # exportPath = directory.path() + "\\test.mp4"
     # edited_clip.write_videofile(filename=exportPath, codec="libx264", audio_codec="aac")
     # importFile()
-    # print("Mirroring Done!")
+    print("Mirroring Done!")
 
 def resize():
     global final_clip
